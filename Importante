@@ -1,4 +1,0 @@
- arquivo Vagrantfile está com as máquinas contendo ip's e id de placa de rede de um host em específico ...
- ao efetuar as configurações em outra máquina é importante alterar essas configurações
- se atentar também ao arquivo de chave ssh
-
