@@ -43,7 +43,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "ansible" do |ansible|
     ansible.vm.network "public_network", ip: "192.168.0.104", bridge: "wlp1s0"
-    ansible.vm.hostname "ansible-machine"
+    ansible.vm.hostname = "ansiblemachine"
     ansible.vm.provision "shell", inline: "cat /configs/havana.pub >> .ssh/authorized_keys"
     ansible.vm.provision "shell",
     inline: "apt-get update && \
