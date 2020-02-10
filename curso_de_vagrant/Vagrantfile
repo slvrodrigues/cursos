@@ -4,11 +4,15 @@ mysql -e "create user 'phpuser'@'%' identified by 'pass';"
 SCRIPT
 
 
-Vagrant.configure("2") do |config|
+Vagrant.configure("2") do |config| #configuração de valores globais memoria e cpu
   config.vm.box = "ubuntu/bionic64"
+  config.vm.provider "virtualbox" do |v|
+  v.memory = 1024
+  v.cpus = 2
+end
 
   config.vm.define "mysqldb" do |mysql|
-    mysql.vm.network "public_network", ip: "192.168.0.101", bridge: "wlp1s0"
+    mysql.vm.network "public_network", ip: "192.168.0.101", bridge: "wlp1s0" #definição da interface de rede maquina hospedeira
 
     mysql.vm.provision "shell", inline: "cat /configs/id_bionic.pub >> .ssh/authorized_keys"
     mysql.vm.provision "shell", inline: "echo Hello, World >> hello.txt"
@@ -16,7 +20,7 @@ Vagrant.configure("2") do |config|
     mysql.vm.provision "shell", inline: "cat /configs/mysqld.cnf > /etc/mysql/mysql.conf.d/mysqld.cnf"
     mysql.vm.provision "shell", inline: "service mysql restart"
 
-    mysql.vm.synced_folder "./configs", "/configs"
+    mysql.vm.synced_folder "./configs", "/configs" #diretório compartilhado
     mysql.vm.synced_folder ".", "/vagrant", disabled: true
   end
 
@@ -28,7 +32,7 @@ Vagrant.configure("2") do |config|
     phpweb.vm.provision "shell", inline: "cat /configs/id_bionic.pub >> .ssh/authorized_keys"
 
         phpweb.vm.provision "puppet" do |puppet|
-        puppet.manifests_path = "./configs/manifests"
+        puppet.manifests_path = "./configs/manifests" #arquivo manifests puppet
         puppet.manifest_file = "phpweb.pp"
 
   end
@@ -36,6 +40,13 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "mysqlserver" do |mysqlserver|
     mysqlserver.vm.network "public_network", ip: "192.168.0.103", bridge: "wlp1s0"
+
+    mysqlserver.vm.provider "virtualbox" do |vb| #definição específica para a máquina ignorando o global
+      vb.memory = 512
+      vb.cpus = 1
+      vb.name = "mysqlserver"
+  end
+
     mysqlserver.vm.hostname = "mysqlserver"
     mysqlserver.vm.provision "shell", inline: "cat /configs/CHAVE.pub >> /home/vagrant/.ssh/authorized_keys"
     mysqlserver.vm.synced_folder "./configs", "/configs"
@@ -45,9 +56,9 @@ Vagrant.configure("2") do |config|
   config.vm.define "ansible" do |ansible|
     ansible.vm.network "public_network", ip: "192.168.0.104", bridge: "wlp1s0"
     ansible.vm.hostname = "ansiblemachine"
-    ansible.vm.provision "shell", inline: "ssh-keygen -t rsa -N '' -f /home/vagrant/.ssh/CHAVE"
-    ansible.vm.provision "shell", inline: "cp -r /home/vagrant/.ssh/CHAVE.pub /configs"
-    ansible.vm.provision "shell", inline: "cat /configs/havana.pub >> .ssh/authorized_keys"
+    ansible.vm.provision "shell", inline: "ssh-keygen -t rsa -N '' -f /home/vagrant/.ssh/CHAVE" #gera chave ssh
+    ansible.vm.provision "shell", inline: "cp -r /home/vagrant/.ssh/CHAVE.pub /configs" #copia chave gerada para diretório compartilhado
+    ansible.vm.provision "shell", inline: "cat /configs/havana.pub >> .ssh/authorized_keys" #copia o valor ssh para chaves autorizadas
     ansible.vm.provision "shell",
     inline: "apt-get update && \
              apt-get install -y software-properties-common && \
