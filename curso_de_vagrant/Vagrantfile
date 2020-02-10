@@ -31,12 +31,12 @@ end
     phpweb.vm.provision "shell", inline: "apt-get update && apt-get install -y puppet"
     phpweb.vm.provision "shell", inline: "cat /configs/id_bionic.pub >> .ssh/authorized_keys"
 
-        phpweb.vm.provision "puppet" do |puppet|
-        puppet.manifests_path = "./configs/manifests" #arquivo manifests puppet
-        puppet.manifest_file = "phpweb.pp"
+    phpweb.vm.provision "puppet" do |puppet|
+    puppet.manifests_path = "./configs/manifests" #arquivo manifests puppet
+    puppet.manifest_file = "phpweb.pp"
 
   end
-  end
+end
 
   config.vm.define "mysqlserver" do |mysqlserver|
     mysqlserver.vm.network "public_network", ip: "192.168.0.103", bridge: "wlp1s0"
@@ -68,4 +68,15 @@ end
     ansible.vm.synced_folder "./configs", "/configs"
     ansible.vm.synced_folder ".", "/vagrant", disabled: true
   end
+
+  config.vm.define "memcached" do |memcached|
+    memcached.vm.box = "centos/7"
+    memcached.vm.provider "virtualbox" do |vb|
+    memcached.vm.network "public_network", ip: "192.168.0.108", bridge: "wlp1s0"
+    memcached.vm.hostname = "memcached"
+      vb.memory = 768
+      vb.cpus = 1
+      vb.name = "centos7_memcached"
+  end
  end
+end
