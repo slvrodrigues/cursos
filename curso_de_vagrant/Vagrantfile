@@ -36,7 +36,8 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "mysqlserver" do |mysqlserver|
     mysqlserver.vm.network "public_network", ip: "192.168.0.103", bridge: "wlp1s0"
-    mysqlserver.vm.provision "shell", inline: "cat /configs/vagrant.pub >> .ssh/authorized_keys"
+    mysqlserver.vm.hostname = "mysqlserver"
+    mysqlserver.vm.provision "shell", inline: "cat /configs/CHAVE.pub >> /home/vagrant/.ssh/authorized_keys"
     mysqlserver.vm.synced_folder "./configs", "/configs"
     mysqlserver.vm.synced_folder ".", "/vagrant", disabled: true
   end
@@ -44,6 +45,8 @@ Vagrant.configure("2") do |config|
   config.vm.define "ansible" do |ansible|
     ansible.vm.network "public_network", ip: "192.168.0.104", bridge: "wlp1s0"
     ansible.vm.hostname = "ansiblemachine"
+    ansible.vm.provision "shell", inline: "ssh-keygen -t rsa -N '' -f /home/vagrant/.ssh/CHAVE"
+    ansible.vm.provision "shell", inline: "cp -r /home/vagrant/.ssh/CHAVE.pub /configs"
     ansible.vm.provision "shell", inline: "cat /configs/havana.pub >> .ssh/authorized_keys"
     ansible.vm.provision "shell",
     inline: "apt-get update && \
