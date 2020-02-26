@@ -2,14 +2,14 @@ package main
 
 import (
 	"fmt"
-	"os"
+	"os" //pacote responsavel por informar a saída do comando ao sistema, status 0 1
 )
 
 func main() {
 
 	exibeIntroducao()
 	exibeMenu()
-	comando := leComando()
+	comando := leComando() //comando será o retorno da função leComando
 
 	switch comando {
 	case 1:
@@ -18,10 +18,10 @@ func main() {
 		fmt.Println("Exibindo Logs...")
 	case 0:
 		fmt.Println("Saindo do programa")
-		os.Exit(0)
+		os.Exit(0) //saída com sucesso
 	default:
 		fmt.Println("Não conheço este comando")
-		os.Exit(-1)
+		os.Exit(-1) //saída com tratamento de erro
 	}
 }
 
