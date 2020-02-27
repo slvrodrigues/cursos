@@ -55,10 +55,14 @@ func exibeMenu() {
 
 }
 func iniciarMonitoramento() {
+	var site string
+	fmt.Println("digite um site acrescido de https://")
+	fmt.Scanln(&site)
 	fmt.Println("Monitorando...")
-	site := "https://www.alura.com.br"
+	//fmt.Scan("digite um site", &site)
+	//site := "https://www.alura.com.br"
 	resp, _ := http.Get(site) //função de retorno , status code http 200 OK diferente disso retorna msg de erro
-	fmt.Println(resp)
+	fmt.Println(resp)         //retorna resposta em tela com cabeçalho de acesso
 
 	if resp.StatusCode == 200 {
 		fmt.Println("Site:", site, "foi carregado com sucesso!")
