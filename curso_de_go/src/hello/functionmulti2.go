@@ -4,6 +4,7 @@ import (
 	"fmt" //pacote responsavel por fazer requisições web
 	"net/http"
 	"os" //pacote responsavel por informar a saída do comando ao sistema, status 0 1
+	"strings"
 )
 
 func main() {
@@ -58,6 +59,9 @@ func iniciarMonitoramento() {
 	var site string
 	fmt.Println("digite um site acrescido de https://")
 	fmt.Scanln(&site)
+	if !strings.HasPrefix(site, "https") {
+		site = fmt.Sprintf("https://%s", site)
+	}
 	fmt.Println("Monitorando...")
 	//fmt.Scan("digite um site", &site)
 	//site := "https://www.alura.com.br"
