@@ -2,7 +2,8 @@ package main
 
 import (
 	"fmt" //pacote responsavel por fazer chamadas e requisições web Get e Post
-	"os"  //pacote responsavel por informar a saída do comando ao sistema, status 0 1
+	"net/http"
+	"os" //pacote responsavel por informar a saída do comando ao sistema, status 0 1
 )
 
 func main() {
@@ -51,5 +52,6 @@ func exibeMenu() {
 func iniciarMonitoramento() {
 	fmt.Println("Monitorando...")
 	site := "https://www.alura.com.br"
-	//resp, err := http.Get(site)
+	resp, _ := http.Get(site)
+	fmt.Println(resp)
 }
