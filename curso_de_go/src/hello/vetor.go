@@ -1,10 +1,9 @@
 package main
 
 import (
-	"fmt"
-	"net/http" //pacote responsavel por fazer requisições web
-	"os"       //pacote responsavel por informar a saída do comando ao sistema, status 0 1
-	"strings"
+	"fmt" //pacote responsavel por fazer requisições web
+	"net/http"
+	"os" //pacote responsavel por informar a saída do comando ao sistema, status 0 1
 )
 
 func main() {
@@ -56,15 +55,17 @@ func exibeMenu() {
 
 }
 func iniciarMonitoramento() {
-	var site string
-	fmt.Println("digite um site:")
-	fmt.Scanln(&site)
-	if !strings.HasPrefix(site, "https") {
-		site = fmt.Sprintf("https://%s", site)
-	}
 	fmt.Println("Monitorando...")
-	resp, _ := http.Get(site) //função de retorno , status code http 200 OK diferente disso retorna msg de erro
-	fmt.Println(resp)         //retorna resposta em tela com cabeçalho de acesso
+	var sites [4]string
+	sites[0] = "https://www.globo.com"
+	sites[1] = "https://www.terra.com.br"
+	sites[2] = "https://www.caelum.com.br"
+	sites[3] = "https://www.hotmail.com"
+
+	fmt.Println(sites)
+
+	site := "https://r7.com"
+	resp, _ := http.Get(site)
 
 	if resp.StatusCode == 200 {
 		fmt.Println("Site:", site, "foi carregado com sucesso!")
