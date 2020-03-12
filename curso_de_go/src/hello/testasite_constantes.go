@@ -7,6 +7,9 @@ import (
 	"time" //pacote com função sleep temporizador
 )
 
+const monitoramentos = 3
+const delay = 5
+
 func main() {
 
 	exibeIntroducao()
@@ -45,6 +48,7 @@ func leComando() int {
 	var comando int
 	fmt.Scan(&comando)
 	fmt.Println("O comando escolhido foi", comando)
+	fmt.Println("")
 
 	return comando
 }
@@ -61,13 +65,14 @@ func iniciarMonitoramento() {
 
 	//fmt.Println(sites)
 
-	for i := 0; i < 5; i++ { //esse for irá executar 5 testes consecutivos
+	for i := 0; i < monitoramentos; i++ { //esse for irá executar 5 testes consecutivos
 
 		for i, site := range sites { //range retorna 2 coisas, índice e item  da posição
 			fmt.Println("Testando site", i, ":", site)
 			testaSite(site)
 		}
-		time.Sleep(5 * time.Second) //tempo pode ser definido desde milisegundos até minutos
+		time.Sleep(delay * time.Second) //tempo pode ser definido desde milisegundos até minutos
+		fmt.Println("")
 	}
 
 }
