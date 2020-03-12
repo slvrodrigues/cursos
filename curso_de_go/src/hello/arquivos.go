@@ -61,9 +61,10 @@ func exibeMenu() {
 }
 func iniciarMonitoramento() {
 	fmt.Println("Monitorando...")
-	sites := []string{"https://www.globo.com", "https://www.terra.com.br", "https://www.digipix.com.br/tetao", "https://www.hotmail.com"}
+	//sites := []string{"https://www.globo.com", "https://www.terra.com.br", "https://www.digipix.com.br/tetao", "https://www.hotmail.com"}
 
 	//fmt.Println(sites)
+	sites := leSitesDoArquivo()
 
 	for i := 0; i < monitoramentos; i++ { //esse for irá executar 5 testes consecutivos a variavel monitoramentos está recebendo o valor
 
@@ -91,4 +92,13 @@ func testaSite(site string) { //função criada com retorno de status code
 	} else {
 		fmt.Println("Site:", site, "Está com problemas. Status Code:", resp.StatusCode)
 	}
+}
+
+func leSitesDoArquivo() []string {
+
+	var sites []string
+
+	arquivo, _ := os.Open("sites.txt") //abre um arquivo e retorna
+	fmt.Println(arquivo)
+	return sites
 }
