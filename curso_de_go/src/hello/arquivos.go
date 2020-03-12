@@ -11,9 +11,8 @@ const monitoramentos = 3 //variável constante com o número de repetições
 const delay = 5          //variável constante com o tempo em segundos para o intervalo entre monitoramentos
 
 func main() {
-
 	exibeIntroducao()
-
+	leSitesDoArquivo()
 	for { //A linguagem go não possuí while, dessa forma o programa entrara em loop usando for
 
 		exibeMenu()
@@ -61,21 +60,19 @@ func exibeMenu() {
 }
 func iniciarMonitoramento() {
 	fmt.Println("Monitorando...")
-	//sites := []string{"https://www.globo.com", "https://www.terra.com.br", "https://www.digipix.com.br/tetao", "https://www.hotmail.com"}
 
-	//fmt.Println(sites)
+	// criando o slice a partir da função leSitesDoArquivo()
 	sites := leSitesDoArquivo()
 
-	for i := 0; i < monitoramentos; i++ { //esse for irá executar 5 testes consecutivos a variavel monitoramentos está recebendo o valor
-
-		for i, site := range sites { //range retorna 2 coisas, índice e item  da posição
+	for i := 0; i < monitoramentos; i++ {
+		for i, site := range sites {
 			fmt.Println("Testando site", i, ":", site)
 			testaSite(site)
 		}
-		time.Sleep(delay * time.Second) //tempo pode ser definido desde milisegundos até minutos declarado na constante no inicio do codigo
+		time.Sleep(delay * time.Second)
 		fmt.Println("")
 	}
-
+	fmt.Println("")
 }
 
 func testaSite(site string) { //função criada com retorno de status code
@@ -97,8 +94,12 @@ func testaSite(site string) { //função criada com retorno de status code
 func leSitesDoArquivo() []string {
 
 	var sites []string
+	arquivo, err := os.Open("sites.txt")
+	if err != nil {
+		fmt.Println("Ocorreu um erro", err)
 
-	arquivo, _ := os.Open("sites.txt") //abre um arquivo e retorna
+	}
 	fmt.Println(arquivo)
+
 	return sites
 }
