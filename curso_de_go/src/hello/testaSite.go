@@ -3,7 +3,8 @@ package main
 import (
 	"fmt" //pacote responsavel por fazer requisições web
 	"net/http"
-	"os" //pacote responsavel por informar a saída do comando ao sistema, status 0 1
+	"os"   //pacote responsavel por informar a saída do comando ao sistema, status 0 1
+	"time" //pacote com função sleep temporizador
 )
 
 func main() {
@@ -56,24 +57,32 @@ func exibeMenu() {
 }
 func iniciarMonitoramento() {
 	fmt.Println("Monitorando...")
-	sites := []string{"https://www.globo.com", "https://www,terra.com.br", "https://www.caelum.com.br", "https://www.hotmail.com"}
+	sites := []string{"https://www.globo.com", "https://www.terra.com.br", "https://www.digipix.com.br/tetao", "https://www.hotmail.com"}
 
-	fmt.Println(sites)
+	//fmt.Println(sites)
 
-	for i, site := range sites { //range retorna 2 coisas, índice e item  da posição
-		fmt.Println("Estou passando na posição", i, "do meu slice e essa posição tem o site:", site)
+	for i := 0; i < 5; i++ { //esse for irá executar 5 testes consecutivos
+
+		for i, site := range sites { //range retorna 2 coisas, índice e item  da posição
+			fmt.Println("Testando site", i, ":", site)
+			testaSite(site)
+		}
+		time.Sleep(5 * time.Second)
 	}
 
-	//for i := 0; i < len(sites); i++ { //variavel i percorre o tamanho do slice e incrementa até concluir
-	//	fmt.Println(sites[i])
-	//}
+}
 
-	site := "https://r7.com"
-	resp, _ := http.Get(site)
+func testaSite(site string) { //função criada com retorno de status code
+	resp, err := http.Get(site) //resposta e erro solicitados em retorno
+
+	if err != nil { //se erro é diferente de nulo, s recebe o erro contendo o seu código
+		s := err.Error()
+		fmt.Printf("%q\n", s)
+		return
+	}
 
 	if resp.StatusCode == 200 {
 		fmt.Println("Site:", site, "foi carregado com sucesso!")
-
 	} else {
 		fmt.Println("Site:", site, "Está com problemas. Status Code:", resp.StatusCode)
 	}

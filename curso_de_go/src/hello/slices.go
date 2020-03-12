@@ -89,7 +89,7 @@ func iniciarMonitoramento() {
 
 func exibeNomes() {
 	nomes := []string{"Douglas", "Daniel", "Bernardo"} //não é necessário declarar tamanho em um slice
-	//nomes = append(nomes, "Aparecida")
+	nomes = append(nomes, "Aparecida")                 // ao acrescentar um item o slice dobra sua capacidade
 	fmt.Println(nomes)
 	fmt.Println(reflect.TypeOf(nomes))
 	fmt.Println("O meu slice tem", len(nomes), "itens")                  // len conta as posições contidas dentro do slice
