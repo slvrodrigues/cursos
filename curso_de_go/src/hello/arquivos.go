@@ -3,8 +3,10 @@ package main
 import (
 	"bufio"
 	"fmt" //pacote responsavel por fazer requisições web
+	"io"
 	"net/http"
-	"os"   //pacote responsavel por informar a saída do comando ao sistema, status 0 1
+	"os" //pacote responsavel por informar a saída do comando ao sistema, status 0 1
+	"strings"
 	"time" //pacote com função sleep temporizador
 )
 
@@ -96,25 +98,29 @@ func leSitesDoArquivo() []string {
 
 	var sites []string
 	arquivo, err := os.Open("sites.txt")
-	//arquivo, err := ioutil.ReadFile("sites.txt") //ioutil sendo utilizado no lugar de os.Open
 	if err != nil {
-		fmt.Println("Ocorreu um erro", err)
+		fmt.Println("Ocorreu um erro:", err)
 
 	}
 
 	leitor := bufio.NewReader(arquivo)
+	for { //for infinito para ler linha a linha o arquivo txt
 
-	linha, err := leitor.ReadString('\n') //aspas duplas não pode ser usado pois retorna uma string
-	if err != nil {
-		fmt.Println("Ocorreu um erro:", err)
+		linha, err := leitor.ReadString('\n') //aspas duplas não pode ser usado pois retorna uma string
+		linha = strings.TrimSpace(linha)      //remove o espaço em branco
+		fmt.Println(linha)
+
+		sites = append(sites, linha)
+
+		if err == io.EOF {
+
+			break
+		}
+
 	}
 
-	fmt.Println(linha)
-
-	//  fmt.Println(string(arquivo)) //é necessário traduzir o array lido "bytes para string"
-
+	//fmt.Println(sites)
+	arquivo.Close()
 	return sites
-}
 
-// codigo possuí algumas formas de ler arquivo, nesse caso está sendo lido apenas
-// a primeira linha do sites.txt
+}
