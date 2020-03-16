@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"fmt" //pacote responsavel por fazer requisições web
 	"net/http"
 	"os"   //pacote responsavel por informar a saída do comando ao sistema, status 0 1
@@ -95,11 +96,25 @@ func leSitesDoArquivo() []string {
 
 	var sites []string
 	arquivo, err := os.Open("sites.txt")
+	//arquivo, err := ioutil.ReadFile("sites.txt") //ioutil sendo utilizado no lugar de os.Open
 	if err != nil {
 		fmt.Println("Ocorreu um erro", err)
 
 	}
-	fmt.Println(arquivo)
+
+	leitor := bufio.NewReader(arquivo)
+
+	linha, err := leitor.ReadString('\n') //aspas duplas não pode ser usado pois retorna uma string
+	if err != nil {
+		fmt.Println("Ocorreu um erro:", err)
+	}
+
+	fmt.Println(linha)
+
+	//  fmt.Println(string(arquivo)) //é necessário traduzir o array lido "bytes para string"
 
 	return sites
 }
+
+// codigo possuí algumas formas de ler arquivo, nesse caso está sendo lido apenas
+// a primeira linha do sites.txt
