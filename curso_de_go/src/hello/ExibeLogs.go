@@ -6,7 +6,7 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
-	"os"      //pacote responsavel por informar a saída do comando ao sistema, status 0 1
+	"os"      //pacote responsavel por informar a saída do comando ao sistema, status 0 1, abrir arquivos...
 	"strconv" //converte diversos tipos para string
 	"strings"
 	"time" //pacote com função sleep temporizador
