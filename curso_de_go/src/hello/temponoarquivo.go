@@ -16,7 +16,7 @@ const delay = 5          //variável constante com o tempo em segundos para o in
 
 func main() {
 	exibeIntroducao()
-	registraLog("site-fora do ar", true)
+	registraLog("Status dos Sites", true)
 	for { //A linguagem go não possuí while, dessa forma o programa entrara em loop usando for
 
 		exibeMenu()
@@ -134,7 +134,7 @@ func registraLog(site string, status bool) {
 	if err != nil {
 		fmt.Println(err)
 	}
-	arquivo.WriteString(site + "- online: " + strconv.FormatBool(status) + "\n")
+	arquivo.WriteString(time.Now().Format("02/01/2006 15:04:05") + "-" + site + "- online: " + strconv.FormatBool(status) + "\n") //formatando log com data
 
 	arquivo.Close()
 }

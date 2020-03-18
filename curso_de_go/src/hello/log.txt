@@ -1,13 +1,13 @@
-site-falso- online: false
-https://www.digipix.com.br/hell- online: false
-https://www.globo.com- online: true
-https://www.terra.com.br- online: true
-https://www.youtube.com- online: true
-https://www.digipix.com.br/hell- online: false
-https://www.globo.com- online: true
-https://www.terra.com.br- online: true
-https://www.youtube.com- online: true
-https://www.digipix.com.br/hell- online: false
-https://www.globo.com- online: true
-https://www.terra.com.br- online: true
-https://www.youtube.com- online: true
+18/03/2020 18:21:44-Status dos Sites- online: true
+18/03/2020 18:21:46-https://www.digipix.com.br/hell- online: false
+18/03/2020 18:21:46-https://www.globo.com- online: true
+18/03/2020 18:21:47-https://www.terra.com.br- online: true
+18/03/2020 18:21:48-https://www.youtube.com- online: true
+18/03/2020 18:21:53-https://www.digipix.com.br/hell- online: false
+18/03/2020 18:21:53-https://www.globo.com- online: true
+18/03/2020 18:21:53-https://www.terra.com.br- online: true
+18/03/2020 18:21:53-https://www.youtube.com- online: true
+18/03/2020 18:21:59-https://www.digipix.com.br/hell- online: false
+18/03/2020 18:21:59-https://www.globo.com- online: true
+18/03/2020 18:21:59-https://www.terra.com.br- online: true
+18/03/2020 18:21:59-https://www.youtube.com- online: true
