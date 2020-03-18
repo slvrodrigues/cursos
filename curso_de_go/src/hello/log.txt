@@ -11,3 +11,32 @@
 18/03/2020 18:21:59-https://www.globo.com- online: true
 18/03/2020 18:21:59-https://www.terra.com.br- online: true
 18/03/2020 18:21:59-https://www.youtube.com- online: true
+18/03/2020 18:37:24-Status dos Sites- online: true
+18/03/2020 18:37:30-Status dos Sites- online: true
+18/03/2020 18:37:43-Status dos Sites- online: true
+18/03/2020 18:37:44-https://www.digipix.com.br/hell- online: false
+18/03/2020 18:37:45-https://www.globo.com- online: true
+18/03/2020 18:37:50-https://www.terra.com.br- online: true
+18/03/2020 18:37:50-https://www.youtube.com- online: true
+18/03/2020 18:37:55-https://www.digipix.com.br/hell- online: false
+18/03/2020 18:37:55-https://www.globo.com- online: true
+18/03/2020 18:37:56-https://www.terra.com.br- online: true
+18/03/2020 18:37:56-https://www.youtube.com- online: true
+18/03/2020 18:38:01-https://www.digipix.com.br/hell- online: false
+18/03/2020 18:38:01-https://www.globo.com- online: true
+18/03/2020 18:38:02-https://www.terra.com.br- online: true
+18/03/2020 18:38:02-https://www.youtube.com- online: true
+18/03/2020 18:39:07-Status dos Sites- online: true
+18/03/2020 18:39:44-Status dos Sites- online: true
+18/03/2020 18:39:55-https://www.digipix.com.br/hell- online: false
+18/03/2020 18:39:55-https://www.globo.com- online: true
+18/03/2020 18:39:56-https://www.terra.com.br- online: true
+18/03/2020 18:39:56-https://www.youtube.com- online: true
+18/03/2020 18:40:02-https://www.digipix.com.br/hell- online: false
+18/03/2020 18:40:02-https://www.globo.com- online: true
+18/03/2020 18:40:02-https://www.terra.com.br- online: true
+18/03/2020 18:40:03-https://www.youtube.com- online: true
+18/03/2020 18:40:08-https://www.digipix.com.br/hell- online: false
+18/03/2020 18:40:08-https://www.globo.com- online: true
+18/03/2020 18:40:09-https://www.terra.com.br- online: true
+18/03/2020 18:40:09-https://www.youtube.com- online: true
