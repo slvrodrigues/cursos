@@ -1,0 +1,13 @@
+site-falso- online: false
+https://www.digipix.com.br/hell- online: false
+https://www.globo.com- online: true
+https://www.terra.com.br- online: true
+https://www.youtube.com- online: true
+https://www.digipix.com.br/hell- online: false
+https://www.globo.com- online: true
+https://www.terra.com.br- online: true
+https://www.youtube.com- online: true
+https://www.digipix.com.br/hell- online: false
+https://www.globo.com- online: true
+https://www.terra.com.br- online: true
+https://www.youtube.com- online: true
