@@ -1,7 +1,0 @@
----
-- hosts: all
-  tasks:
-    - apt:
-        name: php5
-        state: latest
-      become: yes
