@@ -1,0 +1,15 @@
+---
+# tasks file for mysql
+- include_vars: vars/mysql.yml
+
+- include_tasks: centos.yml
+  when: ansible_os_family == "RedHat"
+
+- include_tasks: "debian.yml"
+  when: ansible_os_family == "Debian"
+
+- include_tasks: config.yml
+- include_tasks: root-conf.yml
+- include_tasks: database.yml
+- include_tasks: users.yml
+

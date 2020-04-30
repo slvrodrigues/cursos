@@ -1,0 +1,6 @@
+---
+- hosts: dockerapp
+  vars:
+    path_compose: /app/docker-compose
+  roles:
+    - wordpress

@@ -1,0 +1,52 @@
+---
+- set_fact:
+    compose_file: '{{ path_compose }}/app.yml'
+
+- name: capturar o id do container
+  shell: "docker ps -a | grep {{ app_name }} | awk '{print $1}'"
+  register: container_app
+  ignore_errors: yes
+  tags:
+    - verifica
+
+- debug:
+    msg: "{% if container_app.stdout == '' %} Nao existe nenhum container rodando no server {{ ansible_hostname }} {% else %} O ID do container que sera removido e: {{ container_app.stdout }} {% endif %}"
+  tags:
+    - verifica    
+
+- block:    
+   - name: parar container antigo
+     shell: "docker stop {{ container_app.stdout }}"
+     failed_when: false
+
+   - name: capturando a imagem do container
+     shell: "docker ps -a | grep {{ app_name }} | awk '{print $2}'"
+     register: image_app
+     failed_when: false
+     
+
+   - debug:
+      msg: "A imagem que será removida é: {{ image_app.stdout }}"
+
+   - name: removendo o container antigo
+     shell: "docker rm -f {{ container_app.stdout }}"
+     failed_when: false
+  when: container_app.rc == 0
+  tags:
+    - remove
+
+- name: removendo a imagem antiga
+  shell: "docker rmi {{ image_app.stdout }}"
+  failed_when: false
+  when: image_app.rc == 0
+  tags:
+    - remove
+
+- block:  
+   - name: realizando o deploy da aplicação {{ app_name }} na versão {{ version_app }}
+     shell: "docker-compose -f {{ compose_file }} up -d {{ app_name }}"
+     environment:
+       - VERSION: '{{ version_app }}'
+  rescue:
+   - debug:
+       msg: "Houve um erro na task de deploy de {{ app_name }}"    

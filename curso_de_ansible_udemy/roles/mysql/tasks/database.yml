@@ -1,0 +1,17 @@
+---
+
+- name: Removendo o banco de dados test
+  mysql_db:
+    name: test
+    login_user: root
+    login_password: "{{ password_root_banco }}"
+    state: absent
+
+- name: criar os bancos de dados para a aplicação 
+  mysql_db:
+    name: "{{ item.name}}"
+    login_user: root
+    login_password: "{{ password_root_banco }}"
+    state: present
+  with_items: "{{ mariadb_database }}"
+  register: db_creation

@@ -1,0 +1,22 @@
+password_root_banco: minhasenharoot
+
+mariadb_database:
+  - name: worddb
+  - name: bancoteste
+  - name: emerson
+  - name: wordpress
+
+mariadb_users:
+  - name: word_app
+    password: senhaapp
+    priv: '*.*:ALL,GRANT'
+    host: '192.168.99.%'
+    state: present
+  - name: josivaldo 
+    password: josivaldo
+    priv: 'wordpress.*:ALL'
+    append_privs: 'yes'
+    host: '%'
+    state: present
+
+

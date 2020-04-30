@@ -1,0 +1,42 @@
+---
+- name: garantindo a instalação do epel-release
+  yum: name=epel-release state=present
+
+- name: garantindo a instalação do nginx
+  yum:
+    name: nginx
+    state: latest
+  notify:
+   - habilitando nginx
+
+- name: copiando o arquivo nginx.conf
+  copy:
+    src: nginx.conf
+    dest: /etc/nginx/nginx.conf
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+
+- name: criando o diretorio conf.d
+  file:
+    path: /etc/nginx/conf.d
+    state: directory
+    mode: 0755
+
+- name: copiando o template location para o servidor
+  template:
+    src: location.j2
+    dest: /etc/nginx/conf.d/location.conf
+    mode: 0644
+  notify:  
+    - iniciando nginx
+
+- name: desativando o selinux
+  selinux:
+    policy: targeted
+    state: permissive
+
+
+   
+    

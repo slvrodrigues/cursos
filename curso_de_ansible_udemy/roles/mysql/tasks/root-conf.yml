@@ -1,0 +1,30 @@
+---
+
+- name: checando se a senha de root está setada
+  shell: >
+    mysqladmin -u root status
+  changed_when: false
+  failed_when: false
+  register: root_pwd_check
+
+- name: setando a senha de root para o localhost
+  mysql_user:
+    name: root
+    password: "{{ password_root_banco }}"
+    host: localhost
+    state: present
+  when: root_pwd_check.rc == 0
+
+- name: setando a senha do root para acesso ao localhost
+  mysql_user: 
+    name: root
+    password: "{{ password_root_banco }}"
+    host: "{{ item.host }}"
+    login_user: root
+    login_password: "{{ password_root_banco}}"
+    state: present
+  with_items:
+    - 127.0.0.1 
+    - ::1     
+  when: root_pwd_check.rc == 0
+

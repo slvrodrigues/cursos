@@ -1,0 +1,22 @@
+---
+
+- name: remover o usuario anonymous
+  mysql_user:
+    name: ''
+    host_all: true
+    login_user: root
+    login_password: "{{ password_root_banco }}"
+    state: absent
+
+- name: criando os usuarios de banco
+  mysql_user:
+   login_user: root
+   login_password: "{{ password_root_banco }}"
+   name: wordpress_user
+   password: 443322
+   priv: 'wordpress_db.*:ALL'
+   state: present
+   name: teste
+   password: 112233
+   priv: 'wordpress_db.*:ALL'
+   state: present

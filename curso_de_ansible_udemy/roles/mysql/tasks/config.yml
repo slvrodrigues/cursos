@@ -1,0 +1,13 @@
+---
+
+- name: envia o arquivo my.cnf para o servidor
+  template:
+    src: my.cnf.j2
+    dest: /etc/my.cnf
+  notify: restart mariadb
+
+- name: garantindo que o banco esteja iniciado
+  service:
+    name: mariadb
+    state: started
+    enabled: true

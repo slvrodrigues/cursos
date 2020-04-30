@@ -1,0 +1,18 @@
+---
+
+- name: remover o usuario anonymous
+  mysql_user:
+    name: ''
+    host_all: true
+    login_user: root
+    login_password: "{{ password_root_banco }}"
+    state: absent
+
+- name: criando os usuarios de banco
+  mysql_user:
+    name: "{{ item.name }}"
+    password: "{{ item.password }}"
+    login_user: root
+    login_password: "{{ password_root_banco }}"
+    state: present
+  with_items: "{{ mariadb_users }}"

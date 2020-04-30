@@ -1,0 +1,13 @@
+[mysqld]
+datadir		= {{ datadir }}
+socket		= {{ socket_path }}
+symbolic-links=0
+
+[mysqld_safe]
+log-error	= {{ log_error }}
+pid-file	= {{ pid_file }}
+bind-address	= {{ bind_address }}
+#
+# include all files from the config directory
+#
+!includedir /etc/my.cnf.d

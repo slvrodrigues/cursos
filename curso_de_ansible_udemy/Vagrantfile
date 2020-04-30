@@ -1,0 +1,68 @@
+Vagrant.configure("2") do |config| #configuração de valores globais memoria e cpu
+    config.vm.box = "centos/7"
+    config.vm.provider "virtualbox" do |v|
+    v.memory = 1024
+    v.cpus = 2
+  end
+
+  #APP
+  config.vm.define "dockerapp" do |dockerapp|
+    dockerapp.vm.hostname = "app"
+    dockerapp.vm.box = "centos/7"
+    dockerapp.vm.box_check_update = false
+    dockerapp.vm.network "private_network", ip: "192.168.99.10", dns: "8.8.8.8"
+    dockerapp.vm.provision "shell", inline: "cat /configs/myid_rsa.pub >> /home/vagrant/.ssh/authorized_keys"
+
+    dockerapp.vm.synced_folder "./configs", "/configs" #diretório compartilhado
+    dockerapp.vm.synced_folder ".", "/vagrant", disabled: true
+
+    dockerapp.vm.provision "shell", inline: <<-SHELL
+    yum update -y
+  SHELL
+
+    config.vm.provider "virtualbox" do |dockerapp|
+      dockerapp.memory = "512"
+    end
+  end
+
+
+#WEBAPP
+config.vm.define "webapp" do |webapp|
+  webapp.vm.hostname = "webapp"
+  webapp.vm.box = "centos/7"
+  webapp.vm.box_check_update = false
+  webapp.vm.network "private_network", ip: "192.168.99.11", dns: "8.8.8.8"
+  webapp.vm.provision "shell", inline: "cat /configs/myid_rsa.pub >> /home/vagrant/.ssh/authorized_keys"
+
+    webapp.vm.synced_folder "./configs", "/configs" #diretório compartilhado
+    webapp.vm.synced_folder ".", "/vagrant", disabled: true
+
+webapp.vm.provision "shell", inline: <<-SHELL
+  yum update -y
+SHELL
+
+  config.vm.provider "virtualbox" do |webapp|
+    webapp.memory = "256"
+  end
+ end
+
+ #DBAPP
+ config.vm.define "dbapp" do |dbapp|
+  dbapp.vm.hostname = "dbapp"
+  dbapp.vm.box = "centos/7"
+  dbapp.vm.box_check_update = false
+  dbapp.vm.network "private_network", ip: "192.168.99.12", dns: "8.8.8.8"
+  dbapp.vm.provision "shell", inline: "cat /configs/myid_rsa.pub >> /home/vagrant/.ssh/authorized_keys"
+
+  dbapp.vm.synced_folder "./configs", "/configs" #diretório compartilhado
+  dbapp.vm.synced_folder ".", "/vagrant", disabled: true
+
+  dbapp.vm.provision "shell", inline: <<-SHELL
+  yum update -y
+SHELL
+
+  dbapp.vm.provider "virtualbox" do |dbapp|
+    dbapp.memory = "256"
+  end
+ end
+end

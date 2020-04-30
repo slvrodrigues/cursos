@@ -1,0 +1,5 @@
+---
+
+- hosts: dockerapp
+  roles:
+    - install_docker

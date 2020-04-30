@@ -1,0 +1,7 @@
+- name: instalando o mariadb
+  yum: 
+    name:       
+    - mariadb-server   
+    state: latest
+  notify:
+   - iniciando o banco
