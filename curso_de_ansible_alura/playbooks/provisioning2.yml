@@ -1,0 +1,14 @@
+---
+- hosts: all
+  tasks:
+    - name: 'Instala pacotes de dependencia do sistema operacional'
+      apt:
+        name: "{{ item }}"
+        state: latest
+      become: yes
+      with_items:
+        - php5
+        - apache2
+        - libapache2-mod-php5
+
+# essa forma de uso do item está depreciada a partir da versão 2.11

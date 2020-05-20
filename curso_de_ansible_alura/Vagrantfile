@@ -21,7 +21,7 @@ Vagrant.configure("2") do |config|
   SHELL
 
   config.vm.provider "virtualbox" do |wordpress|
-  	wordpress.memory = "512"
+  	wordpress.memory = "1024"
 end
 end
 end

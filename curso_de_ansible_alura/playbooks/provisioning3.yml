@@ -1,0 +1,13 @@
+---
+  - hosts: all
+    tasks:
+      - name: 'Instala pacotes de dependencia do sistema operacional'
+        apt:
+          name:
+          - php5
+          - apache2
+          - libapache2-mod-php5
+          state: latest
+        become: yes
+         
+# forma correta ao utilizarmos uma lista de tasks substituindo o uso de item depreciado a partir da ver 2.11 
