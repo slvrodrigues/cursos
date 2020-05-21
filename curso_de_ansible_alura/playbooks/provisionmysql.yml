@@ -1,0 +1,53 @@
+---
+- hosts: database
+  handlers:
+    - name: restart mariadb
+      service:
+        name: mariadb
+        state: restarted
+      become: yes
+
+  tasks:
+
+    - name: Make sure pymysql is present
+      pip:
+        name: pymysql
+        state: present
+      become: true # needed if the other tasks are not played as root 
+     
+    - name: 'Instala pacotes de dependencia do sistema operacional'
+      apt:
+        name:
+          - mariadb-client
+          - mariadb-server
+        state: latest
+      become: yes
+
+    - name: 'Cria o banco do Mysql'
+      mysql_db:
+        name: wordpress_db
+        login_user: root
+        login_password: 'SUASENHA'
+        state: present
+        
+    - name: 'Cria o usuário do Mysql'
+      mysql_user:
+        login_user: root
+        login_password: 'SUASENHA'
+        name: wordpress_user
+        password: 1234
+        priv: 'wordpress_db.*:ALL'
+        state: present
+        host: "{{ item }}"
+      with_items:
+       - 'localhost'
+       - '127.0.0.1'
+       - '192.168.99.22'
+
+    - name: 'Configura o MySql para aceitar conexão remota'
+      copy:
+        src: 'files/my.cnf'
+        dest: '/etc/mysql/my.cnf'
+      become: yes
+      notify:
+        - restart mariadb
