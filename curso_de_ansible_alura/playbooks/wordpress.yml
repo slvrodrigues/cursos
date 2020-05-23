@@ -1,0 +1,6 @@
+---
+ 
+  - hosts: wordpress
+    roles:
+      - wordpress
+      #- apache

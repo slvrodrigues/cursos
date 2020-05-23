@@ -1,0 +1,70 @@
+---
+# tasks file for mysql
+
+    - name: Make sure pymysql is present
+      pip:
+        name: pymysql
+        state: present
+      become: true # needed if the other tasks are not played as root 
+     
+    - name: 'Instala pacotes de dependencia do sistema operacional'
+      apt:
+        name:
+          - mariadb-client
+          - mariadb-server
+        state: latest
+      become: yes
+
+    - name: mariadb | Create a new pass for root user
+      command: openssl rand -base64 6 creates=/root/.my.cnf
+      register: mysql_root_pass
+    
+    - name: MariaDB | Display new pass in playbook  output
+      debug:
+        msg: "New root pass: {{mysql_root_pass.stdout}}"
+      when: mysql_root_pass.changed
+
+    - name: mariadb | Change root pass
+      mysql_user: name=root host={{ item }} password={{ mysql_root_pass.stdout }}
+      with_items:
+        - "{{ansible_fqdn}}"
+        - 127.0.0.1
+        - ::1
+        - localhost
+        - 192.168.99.23
+      when: mysql_root_pass.changed
+
+    - name: mariadb | Publish file .my.cnf in the root home
+      template:
+        src: my-cnf.j2
+        dest: /root/.my.cnf
+      when: mysql_root_pass.changed
+      
+
+    - name: 'Cria o banco do Mysql'
+      mysql_db:
+        name: "{{ wp_db_name }}"
+        login_user: "{{ adm_db }}"
+        login_password: "{{ mysql_root_passwd }}" # pontos a melhorar e implantar senha randomica para o root
+        state: present
+        
+    - name: 'Cria o usuário do Mysql'
+      mysql_user:
+        login_user: "{{ adm_db }}"
+        login_password: "{{ mysql_root_passwd }}"
+        name: "{{ wp_username }}"
+        password: "{{ wp_user_password }}"
+        priv: "{{ wp_db_name }}.*:ALL"
+        state: present
+        host: "{{ item }}"
+      with_items:
+       - "{{ wp_host_ip }}"
+         
+
+    - name: 'Configura o MySql para aceitar conexão remota'
+      copy:
+        src: 'files/my.cnf'
+        dest: '/etc/mysql/my.cnf'
+      become: yes
+      notify:
+        - restart mariadb

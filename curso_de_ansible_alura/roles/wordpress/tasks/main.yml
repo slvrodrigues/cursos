@@ -1,27 +1,6 @@
 ---
-  - hosts: wordpress
-    handlers:
-      - name: restart apache
-        service:
-          name: apache2
-          state: restarted
-        become: yes
+# tasks file for wordpress
 
-    tasks:
-      - name: 'Instala pacotes de dependencia do sistema operacional'
-        apt:
-          name:
-          - python2.7
-          - php5
-          - apache2
-          - libapache2-mod-php5
-          - php5-gd
-          - libssh2-php
-          - php5-mcrypt
-          - php5-mysql
-          state: latest
-        become: yes
-       
       - name: 'Baixa o arquivo de instalação do Wordpress'
         get_url:
           url: 'https://br.wordpress.org/wordpress-5.1.4-pt_BR.tar.gz'
@@ -32,17 +11,17 @@
           src: '/tmp/wordpress-5.1.4-pt_BR.tar.gz'
           dest: /var/www/
           remote_src: yes
-        become: yes  
+        become: yes
 
       - name: 'Copiando e modificando arquivo de instalação'
-        copy: 
+        copy:
           src: "{{ wp_installation_dir }}/wp-config-sample.php"
           dest: "{{ wp_installation_dir }}/wp-config.php"
           remote_src: yes
-        become: yes  
-    
-      
-      - name: 'Configura o wp-config com as entradas do banco de dados' 
+        become: yes
+
+
+      - name: 'Configura o wp-config com as entradas do banco de dados'
         replace:
           path: "{{ wp_installation_dir }}/wp-config.php"
           regexp: "{{ item.regex }}"
@@ -59,5 +38,4 @@
           src: 000-default.conf.j2
           dest: /etc/apache2/sites-available/000-default.conf
         notify:
-          - restart apache 
-      
+          - restart apache

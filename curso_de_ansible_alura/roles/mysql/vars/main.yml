@@ -1,0 +1,16 @@
+---
+# vars file for mysql
+
+mysql_root_passwd: 'SUASENHA'
+adm_db: root
+wp_db_ip: '192.168.99.23'
+wp_username: wordpress_user
+wp_db_name: wordpress_db
+wp_user_password: 1234
+wp_installation_dir: '/var/www/wordpress'
+wp_host_ip:
+  - '192.168.99.22'
+  - localhost
+  - 127.0.0.1  
+
+
